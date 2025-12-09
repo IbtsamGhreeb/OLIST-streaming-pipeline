@@ -52,7 +52,7 @@ The pipeline delivers both live operational dashboards and deep historical analy
 Below is the high-level architecture describing ingestion, real-time serving, Iceberg storage, and BI analytics.
 <img width="1484" height="648" alt="archticture" src="https://github.com/user-attachments/assets/747cab34-015c-4657-bcfb-61d8aaaf9f44" />
 
-🗂️ Data Modeling
+## 🗂️ Data Modeling
 
 Dimensions:
 dim_customer
@@ -67,8 +67,11 @@ fact_payment
 Modeling Notes:
 
 Order-level grain using item detail
+
 No SCD needed for order status (already time-stamped)
+
 No SCD for city/state (low-cardinality, no business impact)
+
 Snowflake Streams + Tasks handle incremental loading, capturing new Iceberg changes and applying them through scheduled MERGE operations
 
 Below is a photo of our DWH schema
