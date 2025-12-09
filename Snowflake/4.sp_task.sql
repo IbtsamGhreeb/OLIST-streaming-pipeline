@@ -6,3 +6,7 @@ AS
     'olist.public.OLIST_TABLE', 
     's3://unique-staging-bucket/BrazilianProject/'
   );
+
+
+--turn the task on
+ALTER TASK REFRESH_OLIST_METADATA_TASK RESUME;
