@@ -179,10 +179,19 @@ python producer/producer.py
 **3. Start Spark Streaming Job**
 1-To elastic
 ```Bash
+spark-submit \
+  --master local[*] \
+  --packages org.apache.spark:spark-sql-kafka-0-10_2.12:3.5.0 \
+ Spark_Consumer_To_Elastic.py
 ```
 2- To s3
 ```Bash
+spark-submit \
+  --master local[*] \
+  --packages org.apache.spark:spark-sql-kafka-0-10_2.12:3.5.0 \
+ Spark_Consumer_To_S3.py
 ```
+
 
 
 
