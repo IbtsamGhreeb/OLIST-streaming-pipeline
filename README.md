@@ -95,6 +95,27 @@ Below is a photo of our DWH schema
 
   Iceberg → historical analytics
 
+## ❄️ Iceberg Metadata & Versioning
+
+   -Iceberg enables:
+
+   -Time Travel
+
+  -ACID operations
+
+  -Schema evolution
+
+ -Snapshot-based versioning
+
+Snowflake Metadata Refresh Procedure:
+```SQLCALL REFRESH_ICEBERG_METADATA_SP(
+  'table_name',
+  'external_volume_path'
+);```
+CALL REFRESH_ICEBERG_METADATA_SP(
+  'table_name',
+  'external_volume_path'
+);
 
 
 
