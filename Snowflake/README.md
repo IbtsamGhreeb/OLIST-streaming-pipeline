@@ -25,7 +25,12 @@ FROM OLIST_TABLE
 
 ## **2️⃣ Data Warehouse Modeling – Give Structure to the Chaos**
 Folder: Data Warehouse Modeling
-Files: dim_customer.sql,dim_seller.sql,dim_product.sql,dim_date.sql,fact_order_line.sql,fact_payment.sql
+Files: dim_customer.sql,
+dim_seller.sql,
+dim_product.sql,
+dim_date.sql,
+fact_order_line.sql,'
+fact_payment.sql
 What it does:
 
 Creates dimension tables (dim_customer, dim_seller, dim_product, dim_date).
