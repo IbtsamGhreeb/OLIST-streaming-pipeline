@@ -168,9 +168,13 @@ Undelivered Orders Drillthrough: End-to-end analysis, seller/carrier verificatio
 ## 📊Business Impact & Recommendations
 
 Faster delivery → higher order volume & satisfaction
+
 Prioritize top-performing sellers
+
 Re-engage inactive customers
+
 Focus inventory & promotions on top categories
+
 Reduce freight costs in high-volume states (SP, RJ, MG)
 
 ## 🚀 Airflow Orchestration
@@ -236,11 +240,3 @@ Pull requests are welcome.
 
 MIT License
 
-
-
-
-
-
-
-
-j
