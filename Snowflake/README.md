@@ -1,4 +1,4 @@
-## **❄️ Snowflake Setup & Workflow**
+**❄️ Snowflake Setup & Workflow**
 
 This folder contains all Snowflake SQL scripts used in the Olist Kappa Pipeline project. The scripts are organized by purpose: Iceberg table setup, Data Warehouse modeling, streams, tasks, and stored procedures.
 
@@ -17,8 +17,11 @@ Create Iceberg Catalog – Manage Iceberg table metadata.
 
 Create External Iceberg Table – Point Snowflake to the Iceberg data for querie
 
-**NOTE**
-
+## NOTE :After following these steps you can now try 
+```SQL
+SELECT *
+FROM OLIST_TABLE
+```
 
 ## **2️⃣ Data Warehouse Modeling – Give Structure to the Chaos**
 
