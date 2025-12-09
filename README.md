@@ -115,6 +115,75 @@ CALL REFRESH_ICEBERG_METADATA_SP(
   'external_volume_path'
 );
 ```
+This ensures Snowflake always reads the latest Iceberg metadata JSON.
+
+## 📊 Analytics Layer
+**Real-Time Dashboards (Kibana):**
+Most used payment methods
+
+High-demand product categories
+
+High-demand regions
+
+Live monitoring of spikes or drops in orders on the platform
+
+Track business growth (e.g., total revenue, orders, customers over time)
+
+Track top-selling categories live
+
+View order status distributions instantly
+
+<img width="929" height="526" alt="kibana" src="https://github.com/user-attachments/assets/c4405f66-8f7b-4f6d-8269-80315e2deda0" />
+
+
+**Historical Analysis (Snowflake + Power BI):**
+
+Delivery efficiency
+
+Highest-demanding product categories over time
+
+Customer purchasing behavior (e.g., churn rate, repeat purchases)
+
+Delivery performance over time
+
+Tracking revenue and Financial KPIs
+
+Demand forecasting and inventory management planning with sellers
+
+Key Power BI Dashboards:
+
+Executive Summary: High-level KPIs & Volumes (e.g., monthly orders, delivery efficiency, top categories, top sellers/customers, maps)
+
+Sales & Revenue: Monthly revenue, freight value, average order value, revenue by payment type, installments
+
+Customer Behavior: Repeat rate, churn, inactive customers, insights by state, high-value customers, growth per year
+
+Product Analysis: Most selling categories, revenue/price per category/product
+
+Logistics & Fulfillment: Average delivery time, on-time rate, undelivered orders, duration by day, freight by state, category shipping analysis
+
+Undelivered Orders Drillthrough: End-to-end analysis, seller/carrier verification, customer orders analysis
+
+
+<img width="1332" height="739" alt="power_bi" src="https://github.com/user-attachments/assets/bdae9e00-cb71-4257-add8-3befabf3470d" />
+
+## ▶️ How to Run
+**1. Start Docker Services**
+```Bash
+docker compose up -d
+```
+**2. Start Kafka Producer**
+```Bash
+python producer/producer.py
+```
+**3. Start Spark Streaming Job**
+1-To elastic
+```Bash
+```
+2- To s3
+```Bash
+```
+
 
 
 
