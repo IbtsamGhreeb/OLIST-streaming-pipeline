@@ -29,7 +29,7 @@ Files: dim_customer.sql,
 dim_seller.sql,
 dim_product.sql,
 dim_date.sql,
-fact_order_line.sql,'
+fact_order_line.sql,
 fact_payment.sql
 What it does:
 
