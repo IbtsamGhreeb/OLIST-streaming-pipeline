@@ -5,7 +5,7 @@ This folder contains all Snowflake SQL scripts used in the Olist Kappa Pipeline 
 Follow the steps below to set up and populate your Snowflake environment.
 
 ## **1️⃣ Iceberg Table Setup – The Foundation**
-
+ 
 File: iceberg_setup.sql
 Purpose: Prepare Snowflake to access your Iceberg data on S3.
 
@@ -24,7 +24,7 @@ FROM OLIST_TABLE
 ```
 
 ## **2️⃣ Data Warehouse Modeling – Give Structure to the Chaos**
-
+Folder: Data Warehouse Modeling
 Files: dim_customer.sql,dim_seller.sql,dim_product.sql,dim_date.sql,fact_order_line.sql,fact_payment.sql
 What it does:
 
