@@ -179,17 +179,15 @@ Reduce freight costs in high-volume states (SP, RJ, MG)
 
 Airflow is used to orchestrate:
 
-Kafka Producer startup and monitoring
+-Kafka Producer startup and monitoring
 
-Spark Consumer/Streaming Job triggers
+-Spark Consumer/Streaming Job triggers
 
-Dimension upserts
+-Iceberg metadata updates
 
-Fact table refreshes
+-Dimension upserts
 
-Iceberg metadata updates
-
-Quality checks
+-Fact table refreshes
 
 DAGs follow dependency chaining to ensure end‑to‑end flow from producer → consumer → Iceberg → Snowflake.
 
@@ -221,6 +219,16 @@ spark-submit \
   --packages org.apache.spark:spark-sql-kafka-0-10_2.12:3.5.0 \
  Spark_Consumer_To_S3.py
 ```
+
+**4. Open Airflow UI & Trigger DAGs**
+--Username: airflow   Password: airflow
+
+Orchestrates metadata refresh + facts + dims.
+
+```BASH
+http://localhost:8080
+```
+
 
 ## 🤝 Contributing
 
