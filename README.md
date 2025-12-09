@@ -11,13 +11,13 @@
 
 📊 Analytics Layer
 
+📊 Business Impact & Recommendations
+
 🚀 Airflow Orchestration
 
 📁 Repository Structure
 
 ▶️ How to Run
-
-🛠️ Future Enhancements
 
 🤝 Contributing
 
@@ -167,6 +167,35 @@ Undelivered Orders Drillthrough: End-to-end analysis, seller/carrier verificatio
 
 <img width="1332" height="739" alt="power_bi" src="https://github.com/user-attachments/assets/bdae9e00-cb71-4257-add8-3befabf3470d" />
 
+## 📊Business Impact & Recommendations
+
+Faster delivery → higher order volume & satisfaction
+Prioritize top-performing sellers
+Re-engage inactive customers
+Focus inventory & promotions on top categories
+Reduce freight costs in high-volume states (SP, RJ, MG)
+
+## 🚀 Airflow Orchestration
+
+Airflow is used to orchestrate:
+
+Kafka Producer startup and monitoring
+
+Spark Consumer/Streaming Job triggers
+
+Dimension upserts
+
+Fact table refreshes
+
+Iceberg metadata updates
+
+Quality checks
+
+DAGs follow dependency chaining to ensure end‑to‑end flow from producer → consumer → Iceberg → Snowflake.
+
+<img width="889" height="435" alt="dag" src="https://github.com/user-attachments/assets/5051d327-db3f-4f86-beab-bf9291fe6532" />
+
+
 ## ▶️ How to Run
 **1. Start Docker Services**
 ```Bash
@@ -177,6 +206,7 @@ docker compose up -d
 python producer/producer.py
 ```
 **3. Start Spark Streaming Job**
+
 1-To elastic
 ```Bash
 spark-submit \
@@ -191,6 +221,14 @@ spark-submit \
   --packages org.apache.spark:spark-sql-kafka-0-10_2.12:3.5.0 \
  Spark_Consumer_To_S3.py
 ```
+
+## 🤝 Contributing
+
+Pull requests are welcome.
+
+## 📜 License
+
+MIT License
 
 
 
