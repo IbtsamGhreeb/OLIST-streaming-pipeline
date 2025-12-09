@@ -4,7 +4,7 @@ This folder contains all Snowflake SQL scripts used in the Olist Kappa Pipeline 
 
 Follow the steps below to set up and populate your Snowflake environment.
 
-## 1️⃣ Iceberg Table Setup – The Foundation 
+## **1️⃣ Iceberg Table Setup – The Foundation**
 
 File: iceberg_setup.sql
 Purpose: Prepare Snowflake to access your Iceberg data on S3.
@@ -17,8 +17,10 @@ Create Iceberg Catalog – Manage Iceberg table metadata.
 
 Create External Iceberg Table – Point Snowflake to the Iceberg data for querie
 
+**NOTE**
 
-## 2️⃣ Data Warehouse Modeling – Give Structure to the Chaos
+
+## **2️⃣ Data Warehouse Modeling – Give Structure to the Chaos**
 
 Files: dim_customer.sql,dim_seller.sql,dim_product.sql,dim_date.sql,fact_order_line.sql,fact_payment.sql
 What it does:
@@ -62,11 +64,11 @@ Powers the incremental workflow behind the scenes.
 File: tasks.sql
 What it does:
 
-**.** Automates incremental loads for dimensions and facts.
+. Automates incremental loads for dimensions and facts.
 
-Leverages streams & procedures to insert only new data.
+. Leverages streams & procedures to insert only new data.
 
-Runs on schedule (e.g., every 15 min) – no manual effort required.
+. Runs on schedule (e.g., every 15 min) – no manual effort required.
 
 Run last – let Airflow or Snowflake handle the pipeline for you.
 
