@@ -66,9 +66,7 @@ Modeling Notes:
 
 Order-level grain using item detail
 
-No SCD needed for order status (already time-stamped)
-
-No SCD for city/state (low-cardinality, no business impact)
+SCD Type 1
 
 Snowflake Streams + Tasks handle incremental loading, capturing new Iceberg changes and applying them through scheduled MERGE operations
 
