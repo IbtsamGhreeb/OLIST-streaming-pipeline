@@ -222,14 +222,6 @@ spark-submit \
  Spark_Consumer_To_S3.py
 ```
 
-**4. Open Airflow UI & Trigger DAGs**
---Username: airflow   Password: airflow
-
-Orchestrates metadata refresh + facts + dims.
-
-```BASH
-http://localhost:8080
-```
 
 
 ## 🤝 Contributing
