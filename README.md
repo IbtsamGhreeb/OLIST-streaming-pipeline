@@ -108,11 +108,12 @@ Below is a photo of our DWH schema
  -Snapshot-based versioning
 
 Snowflake Metadata Refresh Procedure:
-```SQL
+
+``` SQL
 CALL REFRESH_ICEBERG_METADATA_SP(
   'table_name',
   'external_volume_path'
-);```
+); 
 
 
 
