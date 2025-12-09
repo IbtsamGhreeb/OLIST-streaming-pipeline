@@ -1,4 +1,4 @@
-## **Olist Data Pipeline – Project README
+## ** Olist Data Pipeline – Project README
 ## 📌 Overview
 
 This repository contains the implementation of a Kappa Architecture that processes Olist marketplace data using Kafka, Apache Spark, Iceberg, Airflow, and Snowflake.
