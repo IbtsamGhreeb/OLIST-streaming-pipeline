@@ -11,11 +11,11 @@ Purpose: Prepare Snowflake to access your Iceberg data on S3.
 
 What to do:
 
-Create External Volume – Connect Snowflake to your S3 bucket.
+1. Create External Volume – Connect Snowflake to your S3 bucket.
 
-Create Iceberg Catalog – Manage Iceberg table metadata.
+2. Create Iceberg Catalog – Manage Iceberg table metadata.
 
-Create External Iceberg Table – Point Snowflake to the Iceberg data for querie
+3. Create External Iceberg Table – Point Snowflake to the Iceberg data for querie
 
 ## NOTE :After following these steps you can now try 
 ```SQL
