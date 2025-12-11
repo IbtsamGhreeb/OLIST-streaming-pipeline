@@ -1,0 +1,116 @@
+-- =====================================================
+-- OLIST DATA WAREHOUSE - FULL DDL CREATION SCRIPT
+-- =====================================================
+
+-- ======================
+-- DIMENSION TABLES
+-- ======================
+
+CREATE OR REPLACE TABLE dim_customer (
+    customer_id_sk         VARCHAR(50)      PRIMARY KEY,
+    customer_unique_id_bk  VARCHAR(50),
+    customer_city          VARCHAR(50),
+    customer_state         VARCHAR(50)
+);
+
+CREATE OR REPLACE TABLE dim_seller (
+    seller_id_sk   INTEGER AUTOINCREMENT PRIMARY KEY,
+    seller_id_bk   VARCHAR(50),
+    seller_city    VARCHAR(50),
+    seller_state   VARCHAR(50)
+);
+
+CREATE OR REPLACE TABLE dim_product (
+    product_id_sk          INTEGER AUTOINCREMENT PRIMARY KEY,
+    product_id_bk          VARCHAR(50),
+    product_category_name  VARCHAR(100)
+);
+
+CREATE OR REPLACE TABLE dim_date AS
+WITH date_spine AS (
+    SELECT DATEADD(day, SEQ4(), '2016-01-01'::DATE) AS date_day
+    FROM TABLE(GENERATOR(ROWCOUNT => 4380))  -- ~12 years
+)
+SELECT
+    date_day AS date_key,                                           -- DATE type → perfect surrogate key
+    
+    YEAR(date_day)                          AS year,
+    QUARTER(date_day)                       AS quarter_number,
+    'Q' || QUARTER(date_day)                AS quarter_name,
+    MONTH(date_day)                         AS month_number,
+    MONTHNAME(date_day)                     AS month_name,
+    TO_CHAR(date_day, 'Mon')                AS month_name_short,
+    DAY(date_day)                           AS day_of_month,
+    DAYOFWEEK(date_day) + 1                 AS day_of_week_number,    -- 1=Monday … 7=Sunday (Brazil standard)
+    DAYNAME(date_day)                       AS day_of_week_name,
+    LEFT(DAYNAME(date_day), 3)              AS day_of_week_short,
+    WEEKOFYEAR(date_day)                    AS week_of_year_iso,
+    YEAROFWEEK(date_day)                    AS week_year_iso,
+    
+    CASE WHEN DAYOFWEEK(date_day) IN (1,7) THEN 1 ELSE 0 END AS is_weekend,  -- Sun=1, Sat=7 in Brazil
+    
+    -- Simple Brazilian holidays (fixed dates)
+    CASE TO_CHAR(date_day, 'MM-DD')
+        WHEN '01-01' THEN 'New Year'
+        WHEN '04-21' THEN 'Tiradentes'
+        WHEN '05-01' THEN 'Labor Day'
+        WHEN '09-07' THEN 'Independence Day'
+        WHEN '10-12' THEN 'Nossa Sra. Aparecida'
+        WHEN '11-02' THEN 'Finados'
+        WHEN '11-15' THEN 'Republic Proclamation'
+        WHEN '12-25' THEN 'Christmas'
+        ELSE NULL
+    END AS holiday_name
+
+FROM date_spine
+WHERE date_day <= '2029-12-31'
+ORDER BY date_day;
+
+
+-- ======================
+-- FACT TABLES
+-- ======================
+
+CREATE OR REPLACE TABLE fact_order_line (
+    order_line_sk                    INTEGER AUTOINCREMENT PRIMARY KEY,
+    customer_id_sk_fk                VARCHAR(50),
+    seller_id_sk_fk                  INTEGER,
+    product_id_sk_fk                 INTEGER,
+    date_key_fk                      DATE,
+
+    order_id                         VARCHAR(50),
+    order_purchase_timestamp         TIMESTAMP_NTZ,
+    order_approved_at                TIMESTAMP_NTZ,
+    order_delivered_carrier_date     TIMESTAMP_NTZ,
+    orders_delivered_customer_date   TIMESTAMP_NTZ,
+    order_estimated_delivery_date    TIMESTAMP_NTZ,
+
+    days_passed_for_delivery         NUMBER(5,0),
+    is_delayed                       BOOLEAN,
+    is_success                       BOOLEAN,
+    freight_value                    NUMBER(10,2),
+    price                            NUMBER(10,2),
+    payment_values                   NUMBER(10,2),
+    order_status                     VARCHAR(20),
+
+    FOREIGN KEY (customer_id_sk_fk) REFERENCES dim_customer(customer_id_sk),
+    FOREIGN KEY (seller_id_sk_fk)   REFERENCES dim_seller(seller_id_sk),
+    FOREIGN KEY (product_id_sk_fk)  REFERENCES dim_product(product_id_sk),
+    FOREIGN KEY (date_key_fk)       REFERENCES dim_date(date_key)
+);
+
+CREATE OR REPLACE TABLE fact_payments (
+    payment_sk            INTEGER AUTOINCREMENT PRIMARY KEY,
+    payment_sequential    NUMBER(3,0),
+    payment_type          VARCHAR(20),
+    payment_installment   NUMBER(3,0),
+
+    customer_id_sk_fk     VARCHAR(50),
+    order_id              VARCHAR(50),
+
+    FOREIGN KEY (customer_id_sk_fk) REFERENCES dim_customer(customer_id_sk)
+);
+
+-- =====================================================
+-- END OF SCRIPT
+-- =====================================================
