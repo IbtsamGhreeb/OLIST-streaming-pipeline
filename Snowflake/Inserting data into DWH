@@ -1,0 +1,138 @@
+/* ============================================================
+   DIMENSION: CUSTOMER
+   ============================================================ */
+
+INSERT INTO dim_customer (
+    customer_id_sk,
+    customer_unique_id_bk,
+    customer_city,
+    customer_state
+)
+SELECT DISTINCT
+    t.customer_id,              -- Surrogate Key (stable)
+    t.customer_unique_id,       -- Business Key
+    t.customer_city,
+    t.customer_state
+FROM OLIST_TABLE t
+WHERE t.customer_unique_id IS NOT NULL
+  AND t.customer_unique_id NOT IN (
+        SELECT customer_unique_id_bk FROM dim_customer
+      );
+
+
+
+/* ============================================================
+   FACT: ORDER LINE
+   ============================================================ */
+
+INSERT INTO fact_order_line (
+    customer_id_sk_fk,
+    seller_id_sk_fk,
+    product_id_sk_fk,
+    order_id,
+    order_purchase_timestamp,
+    order_approved_at,
+    order_delivered_carrier_date,
+    orders_delivered_customer_date,
+    order_estimated_delivery_date,
+    days_passed_for_delivery,
+    is_delayed,
+    is_success,
+    freight_value,
+    price,
+    payment_values,
+    order_status
+)
+SELECT
+    c.customer_id_sk,
+    s.seller_id_sk,
+    p.product_id_sk,
+
+    t.order_id,
+    t.order_purchase_timestamp,
+    t.order_approved_at,
+    t.order_delivered_carrier_date,
+    t.orders_delivered_customer_date,
+    t.order_estimated_delivery_date,
+
+    t.days_passed_for_delivery,
+    t.is_delayed,
+    t.is_success,
+
+    t.freight_value,
+    t.price,
+    t.payment_values,
+    t.order_status
+FROM OLIST.PUBLIC.OLIST_TABLE t
+LEFT JOIN dim_customer c 
+    ON t.customer_unique_id = c.customer_unique_id_bk
+LEFT JOIN dim_seller s 
+    ON t.seller_id = s.seller_id_bk
+LEFT JOIN dim_product p 
+    ON t.product_id = p.product_id_bk
+LEFT JOIN dim_date dd_purchase
+    ON DATE_TRUNC('DAY', t.order_purchase_timestamp) = dd_purchase.date_key
+LEFT JOIN dim_date dd_carrier
+    ON DATE_TRUNC('DAY', t.order_delivered_carrier_date) = dd_carrier.date_key
+LEFT JOIN dim_date dd_customer
+    ON DATE_TRUNC('DAY', t.orders_delivered_customer_date) = dd_customer.date_key
+LEFT JOIN dim_date dd_estimated
+    ON DATE_TRUNC('DAY', t.order_estimated_delivery_date) = dd_estimated.date_key;
+
+
+
+/* ============================================================
+   FACT: PAYMENTS
+   ============================================================ */
+
+INSERT INTO fact_payments (
+    payment_sequential,
+    payment_type,
+    payment_installment,
+    customer_id_sk_fk,
+    order_id
+)
+SELECT
+    t.payment_sequential,
+    t.payment_type,
+    t.payment_installments,
+    c.customer_id_sk,
+    t.order_id
+FROM OLIST_TABLE t
+JOIN dim_customer c 
+    ON t.customer_unique_id = c.customer_unique_id_bk
+WHERE t.payment_sequential IS NOT NULL;
+
+
+
+/* ============================================================
+   DIMENSION: PRODUCT
+   ============================================================ */
+
+INSERT INTO OLIST_WAREHOUSE.PUBLIC.DIM_PRODUCT (
+    product_id_bk,
+    product_category_name
+)
+SELECT DISTINCT
+    product_id,
+    product_category_name
+FROM OLIST.PUBLIC.OLIST_TABLE
+WHERE product_id IS NOT NULL;
+
+
+
+/* ============================================================
+   DIMENSION: SELLER
+   ============================================================ */
+
+INSERT INTO OLIST_WAREHOUSE.PUBLIC.DIM_SELLER (
+    seller_id_bk,
+    seller_city,
+    seller_state
+)
+SELECT DISTINCT
+    seller_id,
+    seller_city,
+    seller_state
+FROM OLIST.PUBLIC.olist_iceberg_stream
+WHERE seller_id IS NOT NULL;
