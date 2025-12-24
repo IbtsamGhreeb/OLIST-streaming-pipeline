@@ -1,53 +1,50 @@
  ## **❄️ Snowflake Setup & Workflow**
-Before starting, you must create an AWS IAM Role with the following:
+ 
+ Before starting, you must create an **AWS IAM Role** with the following:
 
-Permission: Access to the S3 bucket where your Iceberg data resides.
+- **Permission:** Access to the S3 bucket where your Iceberg data resides  
+- **Trust Relationship:** Allow Snowflake to assume this role  
 
-Trust Relationship: Allow Snowflake to assume this role.
-
-This IAM role will be referenced in Snowflake’s External Volume
-
+> This IAM role will be referenced in Snowflake’s External Volume.
 
 
 This folder contains all Snowflake SQL scripts used in the Olist Kappa Pipeline project. The scripts are organized by purpose: Iceberg table setup, Data Warehouse modeling, streams, tasks, and stored procedures.
 
 Follow the steps below to set up and populate your Snowflake environment.
 
-## **1️⃣ Iceberg Table Setup – The Foundation**
- 
-File: iceberg_setup.sql
-Purpose: Prepare Snowflake to access your Iceberg data on S3.
+---
 
-What to do:
+### 1️⃣ Iceberg Table Setup – The Foundation
+**File:** `iceberg_setup.sql`  
+**Purpose:** Prepare Snowflake to access your Iceberg data on S3  
 
-1. Create External Volume – Connect Snowflake to your S3 bucket.
+**Steps:**
+1. **Create External Volume** – Connect Snowflake to your S3 bucket  
+2. **Create Iceberg Catalog** – Manage Iceberg table metadata  
+3. **Create External Iceberg Table** – Point Snowflake to the Iceberg data for queries 
 
-2. Create Iceberg Catalog – Manage Iceberg table metadata.
+> **Note:** After following these steps, you can test with:
 
-3. Create External Iceberg Table – Point Snowflake to the Iceberg data for querie
-
-## NOTE :After following these steps you can now try
 ```SQL
 SELECT *
 FROM OLIST_TABLE
 ```
 
 ## **2️⃣ Data Warehouse Modeling – Give Structure to the Chaos**
-Folder: Data Warehouse Modeling
-Files: dim_customer.sql,
-dim_seller.sql,
-dim_product.sql,
-dim_date.sql,
-fact_order_line.sql,
-fact_payment.sql
-What it does:
+**Files:**: Datawarehouse creation,Inserting data into DWH
 
-Creates dimension tables (dim_customer, dim_seller, dim_product, dim_date).
-
-Creates fact tables (fact_order_line, fact_payment) with business-ready grain.
-
-Ensures keys & relationships are correctly set for analytics.
-## NOTE :Run after iceberg – your warehouse is hungry for structured data and run each file in its excution order
+**What it does:**
+- Creates a structured Data Warehouse from raw marketplace data
+- Defines **dimension tables**: `dim_customer`, `dim_seller`, `dim_product`, `dim_date`
+- Defines **fact tables**: `fact_order_line`, `fact_payment`
+- Implements **galaxy schema design** for efficient analytics
+- Applies **Slowly Changing Dimension (SCD) Type 1** logic for dimensions
+- Uses **Snowflake Streams and Tasks** to incrementally update dimension and fact tables, ensuring **auto-refresh** and simulating real-time streaming data
+- Ensures data consistency and integrity with **MERGE-based incremental loading**
+- Provides a **single source of truth** for both historical and real-time analytics
+- Ensures keys & relationships are correctly set for analytics.
+  
+> **Note:** Run after Iceberg. Execute each file in order, as the warehouse depends on structured data.
 
 ## 3️⃣ **Streams – Eyes on the Data**
 File: streams.sql
