@@ -3,6 +3,14 @@
 
 *A Kappa Architecture-based pipeline for real-time and historical analytics on Olist marketplace data. Tech stack includes Kafka, Spark Streaming, Iceberg, Snowflake, Kibana, and Power BI.*
 
+## 👤 My Contribution
+- Configured and managed Apache Iceberg integration with Snowflake, including metadata synchronization
+- Implemented automated Iceberg metadata refresh in Snowflake
+- Designed and modeled the Data Warehouse schema using fact and dimension tables
+- Built and managed Snowflake Streams and Tasks for incremental data ingestion, automatic refresh of tables, and simulating real-time streaming data for testing
+- Developed MERGE-based loading logic for efficient updates
+
+
 
 ## **📘 Table of Contents**
 📌 Project Overview
