@@ -1,3 +1,9 @@
+# 📦 Olist Streaming Pipeline
+### ITI Graduation Project
+
+*A Kappa Architecture-based pipeline for real-time and historical analytics on Olist marketplace data. Tech stack includes Kafka, Spark Streaming, Iceberg, Snowflake, Kibana, and Power BI.*
+
+
 ## **📘 Table of Contents**
 📌 Project Overview
 
