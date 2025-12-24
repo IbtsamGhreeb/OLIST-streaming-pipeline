@@ -47,36 +47,36 @@ FROM OLIST_TABLE
 > **Note:** Run after Iceberg. Execute each file in order, as the warehouse depends on structured data.
 
 ## 3️⃣ **Streams – Eyes on the Data**
-File: streams.sql
-What it does:
+**File:** streams.sql
 
-Sets up Snowflake streams on Iceberg tables.
+**What it does:**
+- Sets up Snowflake Streams on Iceberg tables
 
-Tracks new rows to feed your incremental pipeline.
+- Tracks new rows to feed the incremental pipeline
 
-Ignites the real-time magic of your Kappa architecture.
+- Powers the real-time capabilities of the Kappa Architecture
 
-Run once tables exist and Iceberg data is ready.
+> **Note:** Run once tables exist and Iceberg data is ready.
 
 
 ## **4️⃣ Stored Procedures – Automate & Refresh**
 
-File: stored_procedure.sql
-What it does:
+**File:** stored_procedure.sql
+**What it does:**
 
-Includes procedures like REFRESH_ICEBERG_METADATA_SP.
+- Includes procedures like REFRESH_ICEBERG_METADATA_SP.
 
-Keeps Iceberg tables fresh and ready for queries.
+- Keeps Iceberg tables fresh and ready for queries.
 
-Powers the incremental workflow behind the scenes.
+- Powers the incremental workflow behind the scenes.
 
-## NOTE: Run after streams, before tasks.
+> **Note:** Run after streams, before tasks.
 
 
 ## **5️⃣ Tasks – Your Auto-Pilot**
 
-File: tasks.sql
-What it does:
+**File:** tasks.sql
+**What it does:**
 
 . Automates incremental loads for dimensions and facts.
 
@@ -84,9 +84,8 @@ What it does:
 
 . Runs on schedule (e.g., every 15 min) – no manual effort required.
 
-Run last – let Airflow or Snowflake handle the pipeline for you.
+> **Note:** Run last – let Airflow or Snowflake handle the pipeline for you.
 
-
-
-
-Run after Iceberg – your warehouse is hungry for structured data!
+> **💡 Tip:** Always follow the execution order:  
+> `Iceberg → DWH Modeling → Streams → Stored Procedures → Tasks`  
+> Your warehouse depends on structured data to function properly.
